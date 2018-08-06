@@ -13,13 +13,13 @@ def get_arguments():
     """ The argument parser of the command-line version """
     parser = argparse.ArgumentParser(description=('Comment counting program'))
 
-    parser.add_argument('--input_folder', '-i',
+    parser.add_argument('-i',
                         help="name of the input folder", type=lambda x: is_valid_file(parser, x),
-                        dest='i')
+                        dest='input_folder')
 
-    parser.add_argument('--single_file', '-s',
+    parser.add_argument('-s',
                         help="name of the input file", type=lambda x: is_valid_file(parser, x),
-                        dest='s')
+                        dest='single_file')
 
     args = parser.parse_args()
     return args

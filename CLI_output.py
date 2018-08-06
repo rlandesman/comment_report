@@ -21,8 +21,8 @@ def print_to_CLI(args):
     """ Output all data into a tabulated form and out to CLI """
     headers=["File Name","Line Count","Comment Count"]
     returnTable = []
-    if(args.i != None): #Folder
-        input_folder_name = args.i
+    if(args.input_folder != None): #Folder
+        input_folder_name = args.input_folder
         list_files = iterate_folder(input_folder_name)
         for oneFile in list_files:
             comment_count = numberOfComments(oneFile, check_file_type(oneFile))
@@ -35,7 +35,7 @@ def print_to_CLI(args):
         return (tabulate(returnTable, headers))
 
     else: #single file
-        oneFile = args.s
+        oneFile = args.single_file
         print(check_file_type(oneFile))
         comment_count = numberOfComments(oneFile,check_file_type(oneFile))
         line_count = numberOfTotalLines(oneFile)
