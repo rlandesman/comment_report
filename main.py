@@ -1,5 +1,5 @@
-#BUG:  Ensure that both individual file and folders are supported in CLI input
 #TODO: Language support beyond python #, depending on file type of file being read in.
+#TODO: Add support in python for triple quotes and for # in between quotes because thats throwing off actual comment count 
 #TODO: Integrate database?
 
 import io
@@ -24,22 +24,35 @@ def get_arguments():
     args = parser.parse_args()
     return args
 
-def numberOfComments(file_name):
+def numberOfComments(file_name, comment_char):
+    """ Collect data on number of comments in the current file """
+    print(comment_char)
     isComment = False
     x = 0
     with open(file_name) as input:
+        idx = 0
         for line in input:
             isComment = False
-            for char in line:
-                if char == "#":
-                    isComment = True
-                else:
-                    pass
+            while idx < (len(line) - 1):
+                if(comment_char == "#"):
+                    if line[idx] == comment_char:
+                        isComment = True
+                    else:
+                        pass
+                    idx+=1
+                if(comment_char=="/"):
+                    if (line[idx+1]==comment_char and line[idx]==comment_char):
+                        isComment = True
+                    else:
+                        pass
+                    idx+=1
             if (isComment == True):
                 x = x + 1
+            idx=0
         return(x)
 
 def numberOfTotalLines(file_name):
+    """ Collect data on number of total lines in the current file """
     x = 0
     with open(file_name) as input:
         for line in input:
@@ -47,33 +60,25 @@ def numberOfTotalLines(file_name):
     return(x)
 
 def is_valid_file(parser, arg):
+    """ Check if file can be opened (legit path?) """
+
     arg = os.path.abspath(arg)
     if not os.path.exists(arg):
         parser.error("The file %s does not exist!" % arg)
     else:
         return arg
 
-def print_data(file_name, number_of_comments,number_of_lines):
-    """
-    Deprecated function due to tabulate library
-    """
-    print textwrap.dedent("""\
-    In total there are %s lines of code in this file
-    In the file: %s, there are %s comment lines
-    """ %(number_of_lines, file_name, number_of_comments))
-
 def iterate_folder(folder_name):
     """
     Put the names of each file in the directory into an iteratable list
+    Currently supported languages: Python, Java, textfile
     """
     returnList = []
     for file in os.listdir(folder_name):
-        if file.endswith(".txt") or file.endswith(".py"):
+        if file.endswith(".txt") or file.endswith(".py") or file.endswith(".java"):
             returnList.append(file)
     return returnList
 
 if __name__ == "__main__":
-    returnTable = []
     args = get_arguments()
-    print_to_CLI(args)
-    #return args
+    print(print_to_CLI(args))
