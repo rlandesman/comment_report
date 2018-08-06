@@ -1,6 +1,4 @@
-#TODO: Take the file name as an input (DONE)
-#TODO: Take a folder as an input (loop through and print the comment number of each) (DONE)
-#TODO: Make data printing prettier basically
+#BUG:  Ensure that both individual file and folders are supported in CLI input
 #TODO: Language support beyond python #, depending on file type of file being read in.
 #TODO: Integrate database?
 
@@ -8,7 +6,7 @@ import io
 import textwrap
 import argparse
 import os
-import tabulate
+from tabulate import tabulate
 
 def get_arguments():
     """ The argument parser of the command-line version """
@@ -51,6 +49,9 @@ def is_valid_file(parser, arg):
         return arg
 
 def print_data(file_name, number_of_comments,number_of_lines):
+    """
+    Deprecated function due to tabulate library
+    """
     print textwrap.dedent("""\
     In total there are %s lines of code in this file
     In the file: %s, there are %s comment lines
@@ -75,7 +76,8 @@ if __name__ == "__main__":
         comment_count = numberOfComments(oneFile)
         line_count = numberOfTotalLines(oneFile)
         false_tuple = []
+        false_tuple.append(oneFile)
         false_tuple.append(line_count)
         false_tuple.append(comment_count)
         returnTable.append(false_tuple)
-    print(returnTable)
+    print(tabulate(returnTable, headers=["File Name","Line Count","Comment Count"]))
