@@ -7,6 +7,7 @@ import textwrap
 import argparse
 import os
 from tabulate import tabulate
+from CLI_output import *
 
 def get_arguments():
     """ The argument parser of the command-line version """
@@ -15,6 +16,10 @@ def get_arguments():
     parser.add_argument('--input_folder', '-i',
                         help="name of the input folder", type=lambda x: is_valid_file(parser, x),
                         dest='i')
+
+    parser.add_argument('--single_file', '-s',
+                        help="name of the input file", type=lambda x: is_valid_file(parser, x),
+                        dest='s')
 
     args = parser.parse_args()
     return args
@@ -70,14 +75,5 @@ def iterate_folder(folder_name):
 if __name__ == "__main__":
     returnTable = []
     args = get_arguments()
-    input_folder_name = args.i
-    list_files = iterate_folder(input_folder_name)
-    for oneFile in list_files:
-        comment_count = numberOfComments(oneFile)
-        line_count = numberOfTotalLines(oneFile)
-        false_tuple = []
-        false_tuple.append(oneFile)
-        false_tuple.append(line_count)
-        false_tuple.append(comment_count)
-        returnTable.append(false_tuple)
-    print(tabulate(returnTable, headers=["File Name","Line Count","Comment Count"]))
+    print_to_CLI(args)
+    #return args
