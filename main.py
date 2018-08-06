@@ -1,6 +1,6 @@
-#TODO: Language support beyond python #, depending on file type of file being read in.
-#TODO: Add support in python for triple quotes and for # in between quotes because thats throwing off actual comment count 
+#TODO: Add support in python for triple quotes
 #TODO: Integrate database?
+#NOTE: DOCSTRINGS are not comments! They are documentation and are processed by the interpreter
 
 import io
 import textwrap
@@ -26,7 +26,6 @@ def get_arguments():
 
 def numberOfComments(file_name, comment_char):
     """ Collect data on number of comments in the current file """
-    print(comment_char)
     isComment = False
     x = 0
     with open(file_name) as input:
@@ -35,7 +34,7 @@ def numberOfComments(file_name, comment_char):
             isComment = False
             while idx < (len(line) - 1):
                 if(comment_char == "#"):
-                    if line[idx] == comment_char:
+                    if (line[idx] == comment_char and line[idx+1] != '"'  and line[idx-1] != '"'):
                         isComment = True
                     else:
                         pass

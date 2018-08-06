@@ -1,3 +1,4 @@
 Hello
 # This is a comment
 # Another one
+This is a test of false comment -- inside "#"
