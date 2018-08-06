@@ -1,4 +1,4 @@
-#TODO: Add support in python for triple quotes
+#TODO: Add support in bash for arm assembly (DONE)
 #TODO: Integrate database?
 #NOTE: DOCSTRINGS are not comments! They are documentation and are processed by the interpreter
 
@@ -41,6 +41,12 @@ def numberOfComments(file_name, comment_char):
                     idx+=1
                 if(comment_char=="/"):
                     if (line[idx+1]==comment_char and line[idx]==comment_char):
+                        isComment = True
+                    else:
+                        pass
+                    idx+=1
+                if(comment_char=="@"):
+                    if (line[idx]==comment_char):
                         isComment = True
                     else:
                         pass

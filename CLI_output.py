@@ -14,6 +14,8 @@ def check_file_type(file_name):
         return "#"
     elif(file_name.endswith(".java")):
         return "/"
+    elif(file_name.endswith(".s")):
+        return "@"
     else:
         raise IOError
 
