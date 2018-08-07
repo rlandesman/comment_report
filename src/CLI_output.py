@@ -1,5 +1,6 @@
 from tabulate import tabulate
 from main import *
+import os
 
 def check_file_type(file_name):
     """
@@ -17,16 +18,25 @@ def check_file_type(file_name):
     elif(file_name.endswith(".s")):
         return "@"
     else:
-        raise IOError
+        pass
+
+def getFullPathNames(root_folder):
+    """ Takes the name of a root folder and returns list of all the full name paths to each file"""
+    absolute_list = []
+    for dirpath,_,filenames in os.walk(root_folder):
+        for f in filenames:
+            absolute_list.append((os.path.abspath(os.path.join(dirpath, f))))
+    return absolute_list
 
 def print_to_CLI(args):
     """ Output all data into a tabulated form and out to CLI """
     headers=["File Name","Line Count","Comment Count","Ratio"]
     returnTable = []
-    input_folder_name = args.input_folder
-    list_files = iterate_folder(input_folder_name)
-    for oneFile in list_files:
-        comment_count = numberOfComments(oneFile, check_file_type(oneFile), input_folder_name)
+    os.chdir(args.input_folder)
+    absolute_list = getFullPathNames(args.input_folder)
+
+    for oneFile in absolute_list:
+        comment_count = numberOfComments(oneFile, check_file_type(oneFile))
         line_count = numberOfTotalLines(oneFile)
         ratio = round(float(comment_count)/float(line_count),3)
         stats = []
