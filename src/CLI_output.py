@@ -35,7 +35,6 @@ def print_to_CLI(args):
             false_tuple.append(comment_count)
             returnTable.append(false_tuple)
         return (tabulate(returnTable, headers))
-
     else: #single file
         oneFile = args.single_file
         print(check_file_type(oneFile))
@@ -47,6 +46,3 @@ def print_to_CLI(args):
         false_tuple.append(comment_count)
         returnTable.append(false_tuple)
         return (tabulate(returnTable, headers))
-
-if __name__ == "__main__":
-    print(print_to_CLI())

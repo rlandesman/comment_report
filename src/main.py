@@ -1,6 +1,7 @@
-#TODO: Add support in bash for arm assembly (DONE)
-#TODO: Integrate database?
-#NOTE: DOCSTRINGS are not comments! They are documentation and are processed by the interpreter
+#TODO: Integrate database in cloud?
+#TODO: GUI on desktop
+#TODO: Collect data over time (connected to database)
+#TODO: organize into folders 
 
 import io
 import textwrap
