@@ -21,28 +21,18 @@ def check_file_type(file_name):
 
 def print_to_CLI(args):
     """ Output all data into a tabulated form and out to CLI """
-    headers=["File Name","Line Count","Comment Count"]
+    headers=["File Name","Line Count","Comment Count","Ratio"]
     returnTable = []
-    if(args.input_folder != None): #Folder
-        input_folder_name = args.input_folder
-        list_files = iterate_folder(input_folder_name)
-        for oneFile in list_files:
-            comment_count = numberOfComments(oneFile, check_file_type(oneFile))
-            line_count = numberOfTotalLines(oneFile)
-            false_tuple = []
-            false_tuple.append(oneFile)
-            false_tuple.append(line_count)
-            false_tuple.append(comment_count)
-            returnTable.append(false_tuple)
-        return (tabulate(returnTable, headers))
-    else: #single file
-        oneFile = args.single_file
-        print(check_file_type(oneFile))
-        comment_count = numberOfComments(oneFile,check_file_type(oneFile))
+    input_folder_name = args.input_folder
+    list_files = iterate_folder(input_folder_name)
+    for oneFile in list_files:
+        comment_count = numberOfComments(oneFile, check_file_type(oneFile), input_folder_name)
         line_count = numberOfTotalLines(oneFile)
-        false_tuple = []
-        false_tuple.append(oneFile)
-        false_tuple.append(line_count)
-        false_tuple.append(comment_count)
-        returnTable.append(false_tuple)
-        return (tabulate(returnTable, headers))
+        ratio = round(float(comment_count)/float(line_count),3)
+        stats = []
+        stats.append(oneFile)
+        stats.append(line_count)
+        stats.append(comment_count)
+        stats.append(ratio)
+        returnTable.append(stats)
+    return (tabulate(returnTable, headers))
