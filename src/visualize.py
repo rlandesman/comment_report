@@ -2,6 +2,7 @@ from CLI_output import *
 import plotly
 import plotly.plotly as py
 import plotly.graph_objs as go
+import os
 
 def set_configurations_plotly():
     plotly.tools.set_credentials_file(username='roee22', api_key='mgBqjfL2kSFhUwaroBii')
@@ -11,7 +12,7 @@ def set_configurations_plotly():
 def get_names_list(dataTable):
     fileNames = []
     for name in dataTable:
-        fileNames.append(name[0])
+        fileNames.append(os.path.basename(name[0]))
     return fileNames
 def get_line_count_list(dataTable):
     lines = []
@@ -36,25 +37,40 @@ def visualize(dataTable):
     lines = get_line_count_list(dataTable)
     comments = get_comment_count_list(dataTable)
     ratios = get_ratio_list(dataTable)
-    print(ratios)
 
     set_configurations_plotly()
 
     trace1 = go.Bar(
         x=fileNames,
-        y=[20, 14, 23],
-        name='Executable'
+        y=lines,
+        name='Executable Lines'
     )
     trace2 = go.Bar(
         x=fileNames,
-        y=[12, 18, 29],
+        y=comments,
         name='Comments'
     )
 
     data = [trace1, trace2]
     layout = go.Layout(
-        barmode='stack'
+        barmode='stack',
+        title='Plot Title',
+        xaxis=dict(
+            title='File Names',
+            titlefont=dict(
+                family='Courier New, monospace',
+                size=18,
+                color='#7f7f7f'
+            )
+        ),
+        yaxis=dict(
+            title='Number of lines',
+            titlefont=dict(
+                family='Courier New, monospace',
+                size=18,
+                color='#7f7f7f'
+            )
+        )
     )
-
     fig = go.Figure(data=data, layout=layout)
-    #py.plot(fig, filename='stacked-bar')
+    py.plot(fig, filename='stacked-bar')
