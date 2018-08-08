@@ -5,12 +5,6 @@ import plotly.graph_objs as go
 import plotly.tools as tls
 import os
 
-def set_configurations_plotly():
-    """ API KEY HAS BEEN RE-ROLLED FROM PUBLIC ONE ON GITHUB """
-    plotly.tools.set_credentials_file(username='xxxxxxx', api_key='xxxxxxx')
-    plotly.tools.set_config_file(world_readable=False,
-                                        sharing='private')
-
 def get_names_list(dataTable):
     fileNames = []
     for name in dataTable:
@@ -51,7 +45,7 @@ def visualize(dataTable):
     data = [trace1, trace2]
     layout = go.Layout(
         barmode='stack',
-        title='Plot Title',
+        title='Executable Code versus Comments',
         xaxis=dict(
             title='File Names',
         ),
@@ -60,4 +54,11 @@ def visualize(dataTable):
         )
     )
     fig = go.Figure(data=data, layout=layout)
-    #py.plot(fig, filename='stacked-bar')
+    py.plot(fig, filename='stacked-bar')
+
+"""
+def set_configurations_plotly():
+    plotly.tools.set_credentials_file(username='xxxxxxx', api_key='xxxxxxx')
+    plotly.tools.set_config_file(world_readable=True,
+                                        sharing='public ')
+"""
