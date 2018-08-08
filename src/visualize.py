@@ -73,6 +73,4 @@ def visualize(dataTable):
         )
     )
     fig = go.Figure(data=data, layout=layout)
-    url = py.plot(fig, filename='stacked-bar')
-    
-    print(tls.get_embed(url))
+    py.plot(fig, filename='stacked-bar')
