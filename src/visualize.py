@@ -6,9 +6,10 @@ import plotly.tools as tls
 import os
 
 def set_configurations_plotly():
-    plotly.tools.set_credentials_file(username='roee22', api_key='mgBqjfL2kSFhUwaroBii')
-    plotly.tools.set_config_file(world_readable=True,
-                                        sharing='public')
+    """ API KEY HAS BEEN RE-ROLLED FROM PUBLIC ONE ON GITHUB """
+    plotly.tools.set_credentials_file(username='xxxxxxx', api_key='xxxxxxx')
+    plotly.tools.set_config_file(world_readable=False,
+                                        sharing='private')
 
 def get_names_list(dataTable):
     fileNames = []
@@ -37,9 +38,6 @@ def visualize(dataTable):
     lines = get_line_count_list(dataTable)
     comments = get_comment_count_list(dataTable)
     ratios = get_ratio_list(dataTable)
-
-    set_configurations_plotly()
-
     trace1 = go.Bar(
         x=fileNames,
         y=lines,
@@ -50,7 +48,6 @@ def visualize(dataTable):
         y=comments,
         name='Comments'
     )
-
     data = [trace1, trace2]
     layout = go.Layout(
         barmode='stack',
@@ -63,4 +60,4 @@ def visualize(dataTable):
         )
     )
     fig = go.Figure(data=data, layout=layout)
-    py.plot(fig, filename='stacked-bar')
+    #py.plot(fig, filename='stacked-bar')
