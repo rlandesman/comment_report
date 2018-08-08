@@ -2,8 +2,15 @@ from tabulate import tabulate
 from main import *
 import os
 
+def filter_file(single_file):
+    """ Method used to filter out unwanted files """
+    if(single_file.endswith(".txt")
+        or single_file.endswith(".py")
+        or single_file.endswith(".java")
+        or single_file.endswith(".s")):
+            return single_file
 
-def check_file_type(file_name):
+def match_comment_type(file_name):
     """
     Check the type of a single file and return the correct charachter that needs to be checked for comments
     # -> python
@@ -19,7 +26,11 @@ def check_file_type(file_name):
     elif(file_name.endswith(".s")):
         return "@"
     else:
-        pass
+        return "null"
+
+def define_headers():
+    headers=["File Name","Line Count","Comment Count","Ratio"]
+    return headers
 
 def get_full_path(root_folder):
     """ Takes the name of a root folder and returns list of all the full name paths to each file"""
@@ -44,17 +55,19 @@ def gather_data(args):
     directory = parseFlagType(args)
     os.chdir(directory)
     absolute_list = get_full_path(args.input_folder)
-
     for oneFile in absolute_list:
-        comment_count = compute_comment_stats(oneFile, check_file_type(oneFile))
-        line_count = compute_linenumber_stats(oneFile)
-        ratio = round(float(comment_count)/float(line_count),3)
-        stats = []
-        stats.append(oneFile)
-        stats.append(line_count)
-        stats.append(comment_count)
-        stats.append(ratio)
-        returnTable.append(stats)
+        if filter_file(oneFile):
+            comment_count = compute_comment_stats(oneFile, match_comment_type(oneFile)) # In an endless loop here...
+            line_count = compute_linenumber_stats(oneFile)
+            ratio = round(float(comment_count)/float(line_count),3)
+            stats = []
+            stats.append(oneFile)
+            stats.append(line_count)
+            stats.append(comment_count)
+            stats.append(ratio)
+            returnTable.append(stats)
+        else:
+            pass
     return returnTable
 
 def print_to_CLI(table):

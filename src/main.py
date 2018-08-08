@@ -26,10 +26,6 @@ def get_arguments():
     args = parser.parse_args()
     return args
 
-def define_headers():
-    headers=["File Name","Line Count","Comment Count","Ratio"]
-    return headers
-
 def compute_comment_stats(file_name, comment_char):
     """ Collect data on number of comments in the current file """
     isComment = False
@@ -45,19 +41,17 @@ def compute_comment_stats(file_name, comment_char):
                         isComment = True
                     else:
                         pass
-                    idx+=1
                 if(comment_char=="/"):
                     if (line[idx+1]==comment_char and line[idx]==comment_char):
                         isComment = True
                     else:
                         pass
-                    idx+=1
                 if(comment_char=="@"):
                     if (line[idx]==comment_char):
                         isComment = True
                     else:
                         pass
-                    idx+=1
+                idx+=1
             if (isComment == True):
                 x = x + 1
             idx=0
