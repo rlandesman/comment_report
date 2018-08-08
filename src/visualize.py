@@ -57,19 +57,9 @@ def visualize(dataTable):
         title='Plot Title',
         xaxis=dict(
             title='File Names',
-            titlefont=dict(
-                family='Courier New, monospace',
-                size=18,
-                color='#7f7f7f'
-            )
         ),
         yaxis=dict(
             title='Number of lines',
-            titlefont=dict(
-                family='Courier New, monospace',
-                size=18,
-                color='#7f7f7f'
-            )
         )
     )
     fig = go.Figure(data=data, layout=layout)
