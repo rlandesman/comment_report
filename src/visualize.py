@@ -2,6 +2,7 @@ from CLI_output import *
 import plotly
 import plotly.plotly as py
 import plotly.graph_objs as go
+import plotly.tools as tls
 import os
 
 def set_configurations_plotly():
@@ -31,7 +32,6 @@ def get_ratio_list(dataTable):
     return ratios
 
 def visualize(dataTable):
-    print(dataTable)
     headers=['File Name','Line Count','Comment Count','Ratio']
     fileNames = get_names_list(dataTable)
     lines = get_line_count_list(dataTable)
@@ -73,4 +73,5 @@ def visualize(dataTable):
         )
     )
     fig = go.Figure(data=data, layout=layout)
-    py.plot(fig, filename='stacked-bar')
+    url = py.plot(fig, filename='stacked-bar')
+    print(tls.get_embed(url))
