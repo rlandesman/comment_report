@@ -1,8 +1,7 @@
-#TODO: Most importantly, go through each sub-folder as well!
 #TODO: GUI on desktop
 #TODO: Collect data over time (connected to database)
-#BUG:  Single file broken because doesnt know which directory to go
-#TODO: Figure out bitbucket integrations, in order to know where these files will sit and how
+#TODO: git clone repo instead of manual entry
+# TODO: Maybe all input will be a google form of sorts --> .txt file
 
 import io
 import textwrap
@@ -10,6 +9,7 @@ import argparse
 import os
 from tabulate import tabulate
 from CLI_output import *
+from visualize import *
 
 def get_arguments():
     """ The argument parser of the command-line version """
@@ -19,10 +19,18 @@ def get_arguments():
                         help="name of the input folder", type=lambda x: is_valid_file(parser, x),
                         dest='input_folder')
 
+    #parser.add_argument('-g',
+    #                    help="name of the Github/BitBucket HTTPS link",
+    #                    dest='input_repo')
+
     args = parser.parse_args()
     return args
 
-def numberOfComments(file_name, comment_char):
+def define_headers():
+    headers=["File Name","Line Count","Comment Count","Ratio"]
+    return headers
+
+def compute_comment_stats(file_name, comment_char):
     """ Collect data on number of comments in the current file """
     isComment = False
     x = 0
@@ -55,7 +63,7 @@ def numberOfComments(file_name, comment_char):
             idx=0
         return(x)
 
-def numberOfTotalLines(file_name):
+def compute_linenumber_stats(file_name):
     """ Collect data on number of total lines in the current file """
     x = 0
     with open(file_name) as input:
@@ -65,7 +73,6 @@ def numberOfTotalLines(file_name):
 
 def is_valid_file(parser, arg):
     """ Check if file can be opened (legit path?) """
-
     arg = os.path.abspath(arg)
     if not os.path.exists(arg):
         parser.error("The file %s does not exist!" % arg)
@@ -74,4 +81,5 @@ def is_valid_file(parser, arg):
 
 if __name__ == "__main__":
     args = get_arguments()
-    print(print_to_CLI(args))
+    visualize(gather_data(args))
+    print_to_CLI(gather_data(args)) #Passes entire Namespace object into this function

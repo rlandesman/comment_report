@@ -2,6 +2,7 @@ from tabulate import tabulate
 from main import *
 import os
 
+
 def check_file_type(file_name):
     """
     Check the type of a single file and return the correct charachter that needs to be checked for comments
@@ -20,7 +21,7 @@ def check_file_type(file_name):
     else:
         pass
 
-def getFullPathNames(root_folder):
+def get_full_path(root_folder):
     """ Takes the name of a root folder and returns list of all the full name paths to each file"""
     absolute_list = []
     for dirpath,_,filenames in os.walk(root_folder):
@@ -28,16 +29,25 @@ def getFullPathNames(root_folder):
             absolute_list.append((os.path.abspath(os.path.join(dirpath, f))))
     return absolute_list
 
-def print_to_CLI(args):
+def parseFlagType(args):
+    """ Input --> namespace object and output --> raw info of flag """
+    if (args.input_folder != None):
+        return args.input_folder
+    elif (args.input_repo != None): #Will change here when needed to clone the repo into local machine, need to reutrn directory name regardless
+        pass
+    else:
+        pass
+
+def gather_data(args):
     """ Output all data into a tabulated form and out to CLI """
-    headers=["File Name","Line Count","Comment Count","Ratio"]
     returnTable = []
-    os.chdir(args.input_folder)
-    absolute_list = getFullPathNames(args.input_folder)
+    directory = parseFlagType(args)
+    os.chdir(directory)
+    absolute_list = get_full_path(args.input_folder)
 
     for oneFile in absolute_list:
-        comment_count = numberOfComments(oneFile, check_file_type(oneFile))
-        line_count = numberOfTotalLines(oneFile)
+        comment_count = compute_comment_stats(oneFile, check_file_type(oneFile))
+        line_count = compute_linenumber_stats(oneFile)
         ratio = round(float(comment_count)/float(line_count),3)
         stats = []
         stats.append(oneFile)
@@ -45,4 +55,8 @@ def print_to_CLI(args):
         stats.append(comment_count)
         stats.append(ratio)
         returnTable.append(stats)
-    return (tabulate(returnTable, headers))
+    return returnTable
+
+def print_to_CLI(table):
+    headers = define_headers()
+    print((tabulate(table, headers)))
