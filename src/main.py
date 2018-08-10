@@ -83,6 +83,6 @@ def single_dir_cleanup():
 if __name__ == "__main__":
     args = get_arguments()
     data = gather_data(args)
-    visualize(data)
     print_to_CLI(data)
+    visualize(data)
     single_dir_cleanup()

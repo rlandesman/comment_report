@@ -76,3 +76,5 @@ def gather_data(args):
 def print_to_CLI(table):
     headers = define_headers()
     print((tabulate(table, headers)))
+    os.system("echo") #Gimme a line break
+    os.system("sleep 2") #Gimme a time break

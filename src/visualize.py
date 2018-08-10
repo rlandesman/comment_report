@@ -35,12 +35,18 @@ def visualize(dataTable):
     trace1 = go.Bar(
         x=fileNames,
         y=lines,
-        name='Executable Lines'
+        name='Executable Lines',
+        marker=dict(
+            color='rgb(76, 163, 244)'
+        )
     )
     trace2 = go.Bar(
         x=fileNames,
         y=comments,
-        name='Comments'
+        name='Comments',
+        marker=dict(
+            color='rgb(15, 105, 200)'
+        )
     )
     data = [trace1, trace2]
     layout = go.Layout(
@@ -54,7 +60,7 @@ def visualize(dataTable):
         )
     )
     fig = go.Figure(data=data, layout=layout)
-    #py.plot(fig, filename='stacked-bar') commented out for testing purposes
+    py.plot(fig, filename='stacked-bar') #commented out for testing purposes
 
 """
 def set_configurations_plotly():
