@@ -4,7 +4,7 @@ import plotly.plotly as py
 import plotly.graph_objs as go
 import plotly.tools as tls
 import os
-#Test comment 
+#Test comment
 def get_names_list(dataTable):
     fileNames = []
     for name in dataTable:
@@ -54,7 +54,7 @@ def visualize(dataTable):
         )
     )
     fig = go.Figure(data=data, layout=layout)
-    py.plot(fig, filename='stacked-bar')
+    #py.plot(fig, filename='stacked-bar') commented out for testing purposes
 
 """
 def set_configurations_plotly():

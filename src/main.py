@@ -1,7 +1,7 @@
-#TODO: GUI on desktop
-#TODO: Collect data over time (connected to database)
-#TODO: git clone repo instead of manual entry
-# TODO: Maybe all input will be a google form of sorts --> .txt file
+# TODO: Integrate this python script as backend to the website?
+# TODO: Collect data over time (connected to database)
+# TODO: Bitbucket/Github integration still neccessary
+# TODO: It's static right now; Trends per repo per week/day would be cooler of a project.
 
 import io
 import textwrap
@@ -19,9 +19,9 @@ def get_arguments():
                         help="name of the input folder", type=lambda x: is_valid_file(parser, x),
                         dest='input_folder')
 
-    #parser.add_argument('-g',
-    #                    help="name of the Github/BitBucket HTTPS link",
-    #                    dest='input_repo')
+    parser.add_argument('-g',
+                        help="name of the Github/BitBucket HTTPS link",
+                        dest='input_repo')
 
     args = parser.parse_args()
     return args
@@ -73,7 +73,16 @@ def is_valid_file(parser, arg):
     else:
         return arg
 
+def single_dir_cleanup():
+    """ Remove single directory that was cloned througn github """
+    os.system("cd ..") #Idk why there are two cd calls tbh but it works
+    os.system("cd ..")
+    dir_name = (os.path.dirname(os.path.realpath(__file__)))
+    os.system("rm -rf "+ dir_name)
+
 if __name__ == "__main__":
     args = get_arguments()
-    visualize(gather_data(args))
-    print_to_CLI(gather_data(args)) #Passes entire Namespace object into this function
+    data = gather_data(args)
+    visualize(data)
+    print_to_CLI(data)
+    single_dir_cleanup()

@@ -2,6 +2,8 @@ from tabulate import tabulate
 from main import *
 import os
 
+new_repo_name = "new_repo"
+
 def filter_file(single_file):
     """ Method used to filter out unwanted files """
     if(single_file.endswith(".txt")
@@ -41,11 +43,12 @@ def get_full_path(root_folder):
     return absolute_list
 
 def parseFlagType(args):
-    """ Input --> namespace object and output --> raw info of flag """
+    """ Input --> namespace object and output --> raw directory location of flag object"""
     if (args.input_folder != None):
         return args.input_folder
-    elif (args.input_repo != None): #Will change here when needed to clone the repo into local machine, need to reutrn directory name regardless
-        pass
+    elif (args.input_repo != None): # Return full path directory name
+        os.system("git clone " + args.input_repo + " " + new_repo_name)
+        return os.path.abspath(new_repo_name)
     else:
         pass
 
@@ -54,12 +57,12 @@ def gather_data(args):
     returnTable = []
     directory = parseFlagType(args)
     os.chdir(directory)
-    absolute_list = get_full_path(args.input_folder)
+    absolute_list = get_full_path(directory)
     for oneFile in absolute_list:
         if filter_file(oneFile):
-            comment_count = compute_comment_stats(oneFile, match_comment_type(oneFile)) # In an endless loop here...
+            comment_count = compute_comment_stats(oneFile, match_comment_type(oneFile))
             line_count = compute_linenumber_stats(oneFile)
-            ratio = round(float(comment_count)/float(line_count),3)
+            ratio = round(float(comment_count)/float(line_count),3) #To the third decimal spot
             stats = []
             stats.append(oneFile)
             stats.append(line_count)
