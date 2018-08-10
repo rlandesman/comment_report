@@ -1,9 +1,10 @@
-from CLI_output import *
+import main
+import os
 import plotly
 import plotly.plotly as py
 import plotly.graph_objs as go
 import plotly.tools as tls
-import os
+
 #Test comment
 def get_names_list(dataTable):
     fileNames = []

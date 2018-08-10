@@ -73,16 +73,19 @@ def is_valid_file(parser, arg):
     else:
         return arg
 
-def single_dir_cleanup():
-    """ Remove single directory that was cloned througn github """
-    os.system("cd ..") #Idk why there are two cd calls tbh but it works
-    os.system("cd ..")
-    dir_name = (os.path.dirname(os.path.realpath(__file__)))
-    os.system("rm -rf "+ dir_name)
+def delete_single_dir(args):
+    if (args.input_folder != None):
+        pass
+    elif (args.input_repo != None):
+        os.system("echo")
+        current = (os.getcwd())
+        os.system("rm -rf " + current)
+    else:
+        pass
 
 if __name__ == "__main__":
     args = get_arguments()
     data = gather_data(args)
-    print_to_CLI(data)
+    print_to_CLI(data, args)
     visualize(data)
-    single_dir_cleanup()
+    delete_single_dir(args)

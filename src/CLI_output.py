@@ -2,7 +2,7 @@ from tabulate import tabulate
 from main import *
 import os
 
-new_repo_name = "new_repo"
+new_repo_name = "new_repo" #Make this variable with name of repo being cloned -> no cleanup needed
 
 def filter_file(single_file):
     """ Method used to filter out unwanted files """
@@ -42,7 +42,7 @@ def get_full_path(root_folder):
             absolute_list.append((os.path.abspath(os.path.join(dirpath, f))))
     return absolute_list
 
-def parseFlagType(args):
+def parse_flag_type(args):
     """ Input --> namespace object and output --> raw directory location of flag object"""
     if (args.input_folder != None):
         return args.input_folder
@@ -55,7 +55,7 @@ def parseFlagType(args):
 def gather_data(args):
     """ Output all data into a tabulated form and out to CLI """
     returnTable = []
-    directory = parseFlagType(args)
+    directory = parse_flag_type(args)
     os.chdir(directory)
     absolute_list = get_full_path(directory)
     for oneFile in absolute_list:
@@ -71,10 +71,10 @@ def gather_data(args):
             returnTable.append(stats)
         else:
             pass
+
     return returnTable
 
-def print_to_CLI(table):
+
+def print_to_CLI(table, args):
     headers = define_headers()
     print((tabulate(table, headers)))
-    os.system("echo") #Gimme a line break
-    os.system("sleep 2") #Gimme a time break
