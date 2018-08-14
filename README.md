@@ -1,15 +1,4 @@
-*Requirments*
--Tabulate
-  pip install tabulate
--Python 2.x
-  pip install python
-#GitPython (to clone repo onto local machine)
-  #pip install gitpython
--Plotly
-  pip install plotly 
-
-
-# Project Title
+# Comment Report
 
 Open-Source project to promote good commenting behavior by showing the ratio of comments to executable code in a public repository. 
 
